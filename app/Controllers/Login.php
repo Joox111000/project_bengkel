@@ -13,9 +13,11 @@ class Login extends BaseController
 
     public function auth(){
         $data = $this->request->getPost();
-        if($data['username'] == "sandi" && $data['password'] == "abc"){
+
+        $dataLogin = $this->akunModel->where('email',$data['username'])->first();
+        if($dataLogin && $data['password'] == $dataLogin['password']){
             return redirect()->to(base_url("Home/dashboard"));
         }
-        return redirect()->to(base_url("Login/index"));
+        return redirect()->back()->with('error','email atau password salah');
     }
 }

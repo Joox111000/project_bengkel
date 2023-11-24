@@ -8,11 +8,11 @@
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="AdminLTE/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="<?= base_url()?>/public/AdminLTE/plugins/fontawesome-free/css/all.min.css">
   <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="<?= base_url()?>/public/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="AdminLTE/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="<?= base_url()?>/public/AdminLTE/dist/css/adminlte.min.css">
   <style>
     ::selection {
   background-color: gray;
@@ -109,10 +109,10 @@
 <!-- /.login-box -->
 
 <!-- jQuery -->
-<script src="AdminLTE/plugins/jquery/jquery.min.js"></script>
+<script src="<?= base_url()?>/public/AdminLTE/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?= base_url()?>/public/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="AdminLTE/dist/js/adminlte.min.js"></script>
+<script src="<?= base_url()?>/public/AdminLTE/dist/js/adminlte.min.js"></script>
 </body>
 </html>
