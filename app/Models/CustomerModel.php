@@ -12,6 +12,7 @@ class CustomerModel extends Model
         'plat',
         'jenis',
         'cc',
+        'telepon',
         'akun_id'
     ];
 
@@ -19,7 +20,7 @@ class CustomerModel extends Model
         return $this->db->table('customer as c')
         ->join('akun as a', 'c.akun_id = a.id')
         ->where('a.role_id',2)
-        ->select('c.*, a.email as email')
+        ->select('c.*, a.email as email, a.id as id_akun')
         ->get()->getResultArray();
     }
 }

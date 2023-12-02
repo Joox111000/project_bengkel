@@ -15,7 +15,7 @@ class Login extends BaseController
         $data = $this->request->getPost();
 
         $dataLogin = $this->akunModel->where('email',$data['username'])->first();
-        if($dataLogin && $data['password'] == $dataLogin['password']){
+        if($dataLogin && sha1( $data['password']) == $dataLogin['password']){
             return redirect()->to(base_url("Home/dashboard"));
         }
         return redirect()->back()->with('error','email atau password salah');

@@ -30,21 +30,19 @@
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
-                        <th>Merk</th>
-                        <th>Jenis/Tipe</th>
+                        <th>Frekuensi (bulan)</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     $no = 1;
-                    foreach ($barang as $data) : ?>
+                    foreach ($item as $data) : ?>
                         <tr>
                             <td><?= $no++ ?></td>
                             <td><?= $data['nama'] ?></td>
-                            <td><?= $data['merk'] ?>
+                            <td><?= $data['frekuensi'] ?>
                             </td>
-                            <td><?= $data['tipe'] ?></td>
                             <td>
                                 <div class="btn-toolbar w-100" role="toolbar" aria-label="Toolbar with button groups">
                                     <div class="btn-group mr-2 w-30" role="group" aria-label="First group">
@@ -65,16 +63,16 @@
         <div class="modal-dialog modal-default">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Data Barang</h4>
+                    <h4 class="modal-title">Tambah Data Service</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="<?= base_url() ?>/Admin/addBarang">
+                    <form method="POST" action="<?= base_url() ?>/Admin/addItem">
 
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-8">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nama</label>
                                     <input type="text" class="form-control" name="nama" placeholder="Enter Nama" required>
@@ -82,14 +80,8 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Merk</label>
-                                    <input type="text" class="form-control" name="merk" placeholder="Enter Merk" required>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Tipe/Jenis</label>
-                                    <input type="text" class="form-control" name="tipe" placeholder="Enter Tipe/Jenis" required>
+                                    <label for="exampleInputEmail1">Frekuensi</label>
+                                    <input type="number" class="form-control" name="frekuensi" placeholder="Enter Frekuensi" required>
                                 </div>
                             </div>
                         </div>
@@ -108,7 +100,7 @@
         <!-- /.modal-dialog -->
     </div>
 
-    <?php foreach ($barang as $data) : ?>
+    <?php foreach ($item as $data) : ?>
         <div class="modal fade" id="modal-edit-<?= $data['id'] ?>">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -119,28 +111,22 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="<?= base_url() ?>/Admin/editBarang">
+                        <form method="POST" action="<?= base_url() ?>/Admin/editItem">
                             <input type="hidden" name="id" value="<?= $data['id'] ?>">
                             <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Nama</label>
-                                        <input type="text" class="form-control" name="nama" placeholder="Enter Nama" required value="<?= $data['nama'] ?>">
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Merk</label>
-                                        <input type="text" class="form-control" name="merk" placeholder="Enter Merk" required value="<?= $data['merk'] ?>">
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Tipe/Jenis</label>
-                                        <input type="text" class="form-control" name="tipe" placeholder="Enter Tipe/Jenis" required value="<?= $data['tipe'] ?>">
-                                    </div>
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Nama</label>
+                                    <input type="text" class="form-control" name="nama" placeholder="Enter Nama" required value="<?=$data['nama']?>">
                                 </div>
                             </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Frekuensi</label>
+                                    <input type="number" class="form-control" name="frekuensi" placeholder="Enter Frekuensi" required value="<?=$data['frekuensi']?>">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.card-body -->
 
@@ -166,7 +152,7 @@
 
                             Apakah Kamu Yakin ?
                         </h3>
-                        <form method="POST" action="<?= base_url() ?>/Admin/deleteBarang">
+                        <form method="POST" action="<?= base_url() ?>/Admin/deleteItem">
 
                             <input type="hidden" name="id" value="<?= $data['id'] ?>">
 

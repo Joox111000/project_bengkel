@@ -11,9 +11,10 @@ class CustomerSeeder extends Seeder
         $data = [
             [
                 'nama'    => 'Superadmin@gmail.com',
-                'plat' => "B 1234 CDF",
+                'plat' => "B,1234,CDF",
                 'jenis'  => "matic",
                 'cc'  => 250,
+                'telepon'  => "080808080808",
                 'akun_id'  => 2,
             ]
         ];

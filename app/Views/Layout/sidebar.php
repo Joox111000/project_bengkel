@@ -28,10 +28,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?=base_url()?>Admin/inventori" class="nav-link">
+            <a href="<?=base_url()?>Admin/barang" class="nav-link">
             <i class="nav-icon fas fa-warehouse"></i>
               <p>
-                Inventori
+                Barang
               </p>
             </a>
           </li>
@@ -52,6 +52,12 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="<?=base_url()?>Admin/tabelService" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Item Service</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="pages/UI/general.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

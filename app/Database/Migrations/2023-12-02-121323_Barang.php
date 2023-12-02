@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CustomerTable extends Migration
+class Barang extends Migration
 {
     public function up()
     {
@@ -19,35 +19,21 @@ class CustomerTable extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '100',
             ],
-            'plat' => [
+            'merk' => [
                 'type' => 'VARCHAR',
                 'constraint' => '250',
             ],
-            'jenis' => [
+            'tipe' => [
                 'type' => 'VARCHAR',
                 'constraint' => '250',
-            ],
-            'cc' => [
-                'type' => 'int',
-                'constraint' => '5',
-            ],
-            'telepon' => [
-                'type' => 'VARCHAR',
-                'constraint' => '20',
-            ],
-            'akun_id' => [
-                'type' => 'INT',
-                'constraint' => 5,
-                'unsigned' => true,
-            ],
+            ]
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('akun_id','akun','id');
-        $this->forge->createTable('customer');
+        $this->forge->createTable('barang');
     }
 
     public function down()
     {
-        $this->forge->dropTable('customer');
+        $this->forge->dropTable('barang');
     }
 }

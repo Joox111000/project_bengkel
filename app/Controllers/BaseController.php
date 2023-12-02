@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\AkunModel;
+use App\Models\BarangModel;
 use App\Models\CustomerModel;
+use App\Models\TableServiceModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -58,11 +60,13 @@ abstract class BaseController extends Controller
         // E.g.: $this->session = \Config\Services::session();
     }
 
-    protected $akunModel,$customerModel;
+    protected $akunModel,$customerModel,$barangModel,$itemServiceModel;
 
     public function __construct()
     {
         $this->akunModel = new AkunModel();
         $this->customerModel = new CustomerModel();
+        $this->barangModel = new BarangModel();
+        $this->itemServiceModel = new TableServiceModel();
     }
 }
