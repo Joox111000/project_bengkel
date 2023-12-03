@@ -23,4 +23,11 @@ class CustomerModel extends Model
         ->select('c.*, a.email as email, a.id as id_akun')
         ->get()->getResultArray();
     }
+
+    function findPlat($plat){
+        return $this->db->table('customer')
+        ->where('plat',$plat)
+        ->select('customer.id as id')
+        ->get()->getRowArray();
+    }
 }

@@ -184,7 +184,7 @@
             "lengthChange": false,
             "autoWidth": false,
             "buttons": [{
-                "text": "Tambah Barang",
+                "text": "Tambah Data",
                 "className": "btn btn-primary btn-info",
                 "action": function() {
                     $('#modal-lg').modal('show');

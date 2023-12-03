@@ -65,7 +65,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/icons.html" class="nav-link">
+                <a href="<?=base_url()?>Admin/pencarian" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pencarian</p>
                 </a>

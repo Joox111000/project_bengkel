@@ -174,4 +174,42 @@ class Admin extends BaseController
         }
         return redirect()->back()->with('error', 'Data Service gagal di Hapus');
     }
+
+    public function pencarian()
+    {
+        $data = array(
+            'title'     => "Cari Riwayat Service",
+            'folder'    => "Admin",
+            'hasil'     => null
+        );
+
+        return view('Admin/pencarian', $data);
+    }
+    public function resetPencarian(){
+        return $this->pencarian();
+
+    }
+
+    public function cari()
+    {
+        $data = $this->request->getPost();
+        
+
+        $dataToFind = strtoupper($data['cari1'].','.$data['cari2'].','.$data['cari3']);
+        $findId = $this->customerModel->findPlat($dataToFind);
+
+        $hasil = null;
+        if($findId){
+            $hasil = $this->riwayatServiceModel->cariRiwayatByCustomer($findId);
+        }
+        $returnData = array(
+            'title'     => "Cari Riwayat Service",
+            'folder'    => "Admin",
+            'hasil'     => $hasil
+        );
+        if($hasil){
+        return view('Admin/pencarian', $returnData);
+        }
+        return redirect()->back()->with('error', 'Data Service Tidak Ditemukan');
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\AkunModel;
 use App\Models\BarangModel;
 use App\Models\CustomerModel;
+use App\Models\RiwayatServiceModel;
 use App\Models\TableServiceModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
@@ -60,7 +61,7 @@ abstract class BaseController extends Controller
         // E.g.: $this->session = \Config\Services::session();
     }
 
-    protected $akunModel,$customerModel,$barangModel,$itemServiceModel;
+    protected $akunModel,$customerModel,$barangModel,$itemServiceModel,$riwayatServiceModel;
 
     public function __construct()
     {
@@ -68,5 +69,6 @@ abstract class BaseController extends Controller
         $this->customerModel = new CustomerModel();
         $this->barangModel = new BarangModel();
         $this->itemServiceModel = new TableServiceModel();
+        $this->riwayatServiceModel = new RiwayatServiceModel();
     }
 }
