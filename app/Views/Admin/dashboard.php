@@ -1,7 +1,10 @@
 <?= $this->extend('Layout/header'); ?>
 <?= $this->section('content'); ?>
-  <!-- Main content -->
-  <section class="content">
+<!-- Main content -->
+<section class="content">
+  <?php
+  if (session()->get('user')['namaRole'] == "admin") :
+  ?>
     <div class="container-fluid">
       <!-- Info boxes -->
       <div class="row">
@@ -10,10 +13,9 @@
             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">CPU Traffic</span>
+              <span class="info-box-text">Customer</span>
               <span class="info-box-number">
                 10
-                <small>%</small>
               </span>
             </div>
             <!-- /.info-box-content -->
@@ -26,7 +28,7 @@
             <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Likes</span>
+              <span class="info-box-text">Item Service</span>
               <span class="info-box-number">41,410</span>
             </div>
             <!-- /.info-box-content -->
@@ -833,10 +835,102 @@
       </div>
       <!-- /.row -->
     </div><!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
+  <?php endif; ?>
+
+  <?php
+  if (session()->get('user')['namaRole'] == "user") :
+  ?>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- /.col -->
+        <div class="col-md-12">
+          <div class="card card-primary">
+            <div class="card-body p-0">
+              <!-- THE CALENDAR -->
+              <div id="calendar"></div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  <?php endif; ?>
+</section>
+<!-- /.content -->
 <?= $this->endsection(); ?>
 
 <?= $this->section('script'); ?>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
 
+    var today = new Date();
+    // Dapatkan tahun, bulan, dan tanggal
+    var year = today.getFullYear();
+    var month = (today.getMonth() + 1).toString().padStart(2, '0'); // Tambah 1 karena Januari dimulai dari indeks 0
+    var day = today.getDate().toString().padStart(2, '0');
+    var formattedDate = year + '-' + month + '-' + day;
+
+    
+    
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      initialDate: formattedDate,
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      events: [{
+          title: 'All Day Event',
+          start: '2023-12-01'
+        },
+        {
+          title: 'Long Event',
+          start: '2023-12-07',
+        },
+        {
+          groupId: '999',
+          title: 'Repeating Event',
+          start: '2023-12-09'
+        },
+        {
+          groupId: '999',
+          title: 'Repeating Event',
+          start: '2023-12-16'
+        },
+        {
+          title: 'Conference',
+          start: '2023-12-12',
+        },
+        {
+          title: 'Meeting',
+          start: '2023-12-12',
+        },
+        {
+          title: 'Lunch',
+          start: '2023-12-12'
+        },
+        {
+          title: 'Meeting',
+          start: '2023-12-12'
+        },
+        {
+          title: 'Birthday Party',
+          start: '2023-12-13'
+        },
+        {
+          title: 'Click for Google',
+          url: 'https://google.com/',
+          start: '2023-12-28'
+        }
+      ]
+    });
+
+    calendar.render();
+  });
+</script>
 <?= $this->endsection(); ?>

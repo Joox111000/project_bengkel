@@ -31,6 +31,7 @@
                         <th>No</th>
                         <th>Nama</th>
                         <th>Frekuensi (bulan)</th>
+                        <th>Barang yang diservis</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -42,6 +43,7 @@
                             <td><?= $no++ ?></td>
                             <td><?= $data['nama'] ?></td>
                             <td><?= $data['frekuensi'] ?>
+                            <td><?= $data['bNama'] ?>
                             </td>
                             <td>
                                 <div class="btn-toolbar w-100" role="toolbar" aria-label="Toolbar with button groups">
@@ -72,7 +74,7 @@
                     <form method="POST" action="<?= base_url() ?>/Admin/addItem">
 
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nama</label>
                                     <input type="text" class="form-control" name="nama" placeholder="Enter Nama" required>
@@ -82,6 +84,17 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Frekuensi</label>
                                     <input type="number" class="form-control" name="frekuensi" placeholder="Enter Frekuensi" required>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Barang Servis</label>
+                                    <select class="form-control select2" style="width: 100%;" name="barang" required>
+                                        <option selected="selected" disabled>-Barang-</option>
+                                        <?php foreach($barang as $b):?>
+<option value="<?=$b['id']?>"><?=$b['nama']?></option>
+                                            <?php endforeach;?>
+                                    </select>
                                 </div>
                             </div>
                         </div>

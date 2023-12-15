@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Models\AkunModel;
 use App\Models\BarangModel;
 use App\Models\CustomerModel;
+use App\Models\JadwalServiceModel;
+use App\Models\KritikModel;
 use App\Models\RiwayatServiceModel;
 use App\Models\TableServiceModel;
 use CodeIgniter\Controller;
@@ -61,7 +63,7 @@ abstract class BaseController extends Controller
         // E.g.: $this->session = \Config\Services::session();
     }
 
-    protected $akunModel,$customerModel,$barangModel,$itemServiceModel,$riwayatServiceModel;
+    protected $akunModel, $customerModel, $barangModel, $itemServiceModel, $riwayatServiceModel, $kritikModel, $jadwalModel;
 
     public function __construct()
     {
@@ -70,5 +72,7 @@ abstract class BaseController extends Controller
         $this->barangModel = new BarangModel();
         $this->itemServiceModel = new TableServiceModel();
         $this->riwayatServiceModel = new RiwayatServiceModel();
+        $this->kritikModel = new KritikModel();
+        $this->jadwalModel = new JadwalServiceModel();
     }
 }

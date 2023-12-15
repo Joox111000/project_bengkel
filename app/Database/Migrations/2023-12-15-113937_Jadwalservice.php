@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class TableService extends Migration
+class Jadwalservice extends Migration
 {
     public function up()
     {
@@ -15,27 +15,28 @@ class TableService extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'nama' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '100',
-            ],
-            'frekuensi' => [
-                'type' => 'int',
-                'constraint' => 5,
-            ],
-            'barang_id' => [
+            'customer_id' => [
                 'type' => 'INT',
                 'constraint' => 5,
                 'unsigned' => true,
             ],
+            'service_id' => [
+                'type' => 'INT',
+                'constraint' => 5,
+                'unsigned' => true,
+            ],
+            'date' => [
+                'type' => 'DATE'
+            ]
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('barang_id','barang','id');
-        $this->forge->createTable('table_service');
+        $this->forge->addForeignKey('customer_id', 'customer', 'id');
+        $this->forge->addForeignKey('service_id', 'table_service', 'id');
+        $this->forge->createTable('jadwal_service');
     }
 
     public function down()
     {
-        $this->forge->dropTable('table_service');
+        $this->forge->dropTable('jadwal_service');
     }
 }

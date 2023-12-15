@@ -12,10 +12,13 @@ class TableServiceSeeder extends Seeder
             [
                 'nama'    => 'injeksi',
                 'frekuensi' => 6,
+                'barang_id' =>1
             ],
             [
                 'nama'    => 'rem',
                 'frekuensi' => 1,
+                'barang_id' =>1
+
             ],
         ];
     

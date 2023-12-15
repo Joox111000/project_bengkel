@@ -7,5 +7,6 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->setAutoRoute(true);
 $routes->get('/', 'Login::index');
+$routes->get('Admin/resetPencarian', 'Admin::pencarian');
 
 // $routes->post('/auth', 'Login::auth');

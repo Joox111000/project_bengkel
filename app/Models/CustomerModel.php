@@ -30,4 +30,10 @@ class CustomerModel extends Model
         ->select('customer.id as id')
         ->get()->getRowArray();
     }
+
+    function getCust(){
+        return $this->db->table('customer')
+        ->select('customer.id as id, customer.plat as plat')
+        ->get()->getResultArray();
+    }
 }

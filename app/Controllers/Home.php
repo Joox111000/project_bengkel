@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use PHPUnit\Util\Json;
+
 class Home extends BaseController
 {
     public function index(): string
@@ -10,6 +12,19 @@ class Home extends BaseController
     }
 
     public function dashboard(){
-        return view('Admin/dashboard');
+        $jadwal = null;
+        // if(session()->get('user')['namaRole'] == "user"){
+        //     $jadwal = $this->jadwalModel->findJadwalById(session()->get('user')['cusId']);
+        // }
+        $data = array(
+            'title'     => "Dashboard",
+            'folder'    => "Customer",
+            'jadwal'    => $jadwal
+        );
+        return view('Admin/dashboard',$data);
     }
+
+//     public function findJadwal(){
+// return Json($this->jadwalModel->findJadwalById(session()->get('user')['cusId']));
+//     }
 }
