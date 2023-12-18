@@ -874,63 +874,45 @@
     var day = today.getDate().toString().padStart(2, '0');
     var formattedDate = year + '-' + month + '-' + day;
 
-    
-    
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      initialDate: formattedDate,
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-      },
-      events: [{
-          title: 'All Day Event',
-          start: '2023-12-01'
-        },
-        {
-          title: 'Long Event',
-          start: '2023-12-07',
-        },
-        {
-          groupId: '999',
-          title: 'Repeating Event',
-          start: '2023-12-09'
-        },
-        {
-          groupId: '999',
-          title: 'Repeating Event',
-          start: '2023-12-16'
-        },
-        {
-          title: 'Conference',
-          start: '2023-12-12',
-        },
-        {
-          title: 'Meeting',
-          start: '2023-12-12',
-        },
-        {
-          title: 'Lunch',
-          start: '2023-12-12'
-        },
-        {
-          title: 'Meeting',
-          start: '2023-12-12'
-        },
-        {
-          title: 'Birthday Party',
-          start: '2023-12-13'
-        },
-        {
-          title: 'Click for Google',
-          url: 'https://google.com/',
-          start: '2023-12-28'
-        }
-      ]
-    });
+    $.ajax({
+      url: "<?= base_url() ?>Home/jadwalService",
+      type: 'GET',
+      success: function(response) {
+        var dataJadwal = [];
+        var dataServis = [];
+        response.forEach(function(data) {
+          dataJadwal.push(data.date);
+          dataServis.push(data.tNama);
+        });
 
-    calendar.render();
+        console.log(dataJadwal);
+        console.log(dataServis)
+        var eventsArray = [];
+
+        for (var i = 0; i < dataJadwal.length; i++) {
+          eventsArray.push({
+            title: dataServis[i],
+            start: dataJadwal[i]
+          });
+        }
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          initialDate: formattedDate,
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          },
+          events: eventsArray
+        });
+
+        calendar.render();
+      },
+      error: function(err) {
+        console.log(err);
+      }
+    })
+
   });
 </script>
 <?= $this->endsection(); ?>

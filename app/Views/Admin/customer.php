@@ -134,15 +134,15 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Plat</label>
                                     <div class="row">
-                                        <diw class="col-3 grup-plat">
-                                            <input type="text" name="plat1" class="form-control" maxlength="2" required placeholder="B">
-                                        </diw>
-                                        <diw class="col-5 grup-plat">
+                                        <div class="col-3 grup-plat">
+                                            <input type="text" name="plat1" class="form-control" maxlength="2" required placeholder="B" style="text-transform: uppercase;">
+                                        </div>
+                                        <div class="col-5 grup-plat">
                                             <input type="text" pattern="\d*" name="plat2" class="form-control" maxlength="4" required placeholder="1234">
-                                        </diw>
-                                        <diw class="col-4 grup-plat">
-                                            <input type="text" name="plat3" class="form-control" maxlength="3" required placeholder="ABC">
-                                        </diw>
+                                        </div>
+                                        <div class="col-4 grup-plat">
+                                            <input type="text" name="plat3" class="form-control" maxlength="3" required placeholder="ABC" style="text-transform: uppercase;">
+                                        </div>
                                     </div>
 
                                 </div>

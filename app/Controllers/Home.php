@@ -27,4 +27,11 @@ class Home extends BaseController
 //     public function findJadwal(){
 // return Json($this->jadwalModel->findJadwalById(session()->get('user')['cusId']));
 //     }
+
+public function jadwalService(){
+    $id = session()->get('user')['cusId'];
+    $data = $this->jadwalModel->findJadwalById($id);
+
+    return $this->response->setJSON($data);
+}
 }

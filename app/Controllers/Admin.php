@@ -71,79 +71,62 @@ class Admin extends BaseController
         return view('Admin/customer', $data);
     }
     public function addCustomer()
-{
-    $data = $this->request->getPost();
+    {
+        $data = $this->request->getPost();
 
-    $plat = $data['plat1'] . "," . $data['plat2'] . "," . $data['plat3'];
-
-    // Mulai transaksi
-    $db = \Config\Database::connect();
-    $db->transBegin();
-
-    try {
-        $insertAkun = [
+        $plat = $data['plat1'] . "," . $data['plat2'] . "," . $data['plat3'];
+        $insertAkun = array(
             'email'     => $data['email'],
             'password'  => sha1($data['password']),
             'role_id'   => 2
-        ];
+        );
+
+        $dataService = $this->itemServiceModel->findAll();
+        $arrId = [];
+        foreach ($dataService as $d) {
+            array_push($arrId, [intval($d['id']), intval($d['frekuensi']), $d['nama']]);
+        }
 
         if ($this->akunModel->insert($insertAkun)) {
-            $insertCustomer = [
+            $insertCustomer = array(
                 'nama'      => $data['nama'],
                 'plat'      => $plat,
                 'jenis'     => $data['jenis'],
                 'cc'        => $data['cc'],
-                'telepon'   => $data['telepon'],
+                'telepon'        => $data['telepon'],
                 'akun_id'   => $this->akunModel->getInsertID()
-            ];
-
+            );
             if ($this->customerModel->insert($insertCustomer)) {
+
+
                 $jadwal = [];
                 $cusId = $this->customerModel->getInsertID();
                 $tanggal = new DateTime();
                 $tahun = $tanggal->format('Y');
                 $bulan = $tanggal->format('m');
                 $hari = $tanggal->format('d');
-
-                foreach ($this->itemServiceModel->findAll() as $d) {
-                    $addBulan = $d['frekuensi'];
+                foreach ($arrId as $newData) {
+                    $addBulan = $newData[1];
                     $newBulan = intval($bulan + $addBulan);
-                    $newTahun = intval($tahun);
-
                     if ($newBulan > 12) {
                         $newBulan -= 12;
-                        $newTahun += 1;
+                        $tahun += 1;
                     }
-
-                    $dataJ = [
+                    $dataJ = null;
+                    $dataJ = array(
                         'customer_id' => $cusId,
-                        'service_id'  => intval($d['id']),
-                        'date'        => $newTahun . "-" . $newBulan . "-" . $hari
-                    ];
-
+                        'service_id' => $newData[0],
+                        'date'      => $tahun . "-" . $newBulan . "-" . $hari
+                    );
                     array_push($jadwal, $dataJ);
                 }
-
-                // Sisipkan data jadwal menggunakan insertBatch
-                $this->jadwalModel->insertBatch($jadwal);
-
-                // Commit transaksi
-                $db->transCommit();
-
-                return redirect()->back()->with('success', 'Data Customer berhasil diinput');
+                if($this->jadwalModel->insertBatch($jadwal)){
+                    return redirect()->back()->with('success', 'Data Customer berhasil diinput');
+                }
             }
+            return redirect()->back()->with('error', 'Data Customer gagal diinput');
         }
-
-        // Rollback transaksi jika ada kesalahan
-        $db->transRollback();
-
-        return redirect()->back()->with('error', 'Data Customer gagal diinput');
-    } catch (Exception $e) {
-        // Rollback transaksi jika ada kesalahan
-        $db->transRollback();
-        throw $e;
     }
-}
 
     public function editCustomer()
     {
@@ -167,9 +150,10 @@ class Admin extends BaseController
     {
         $data = $this->request->getPost();
         $delJadwal = $this->jadwalModel->where('customer_id', $data['id'])->delete();
+        $delRiwayat = $this->riwayatServiceModel->where('customer_id', $data['id'])->delete();
         $delCust = $this->customerModel->delete($data['id']);
         $delAkun = $this->akunModel->delete($data['accountId']);
-        if ($delJadwal && $delCust && $delAkun) {
+        if ($delJadwal &&$delRiwayat && $delCust && $delAkun) {
             return redirect()->back()->with('success', 'Data Customer berhasil di Hapus');
         }
         return redirect()->back()->with('error', 'Data Customer gagal di Hapus');
