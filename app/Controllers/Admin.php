@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use DateTime;
 use Exception;
+
 class Admin extends BaseController
 {
     public function index()
@@ -102,10 +103,11 @@ class Admin extends BaseController
                 $jadwal = [];
                 $cusId = $this->customerModel->getInsertID();
                 $tanggal = new DateTime();
-                $tahun = $tanggal->format('Y');
-                $bulan = $tanggal->format('m');
-                $hari = $tanggal->format('d');
+
                 foreach ($arrId as $newData) {
+                    $tahun = $tanggal->format('Y');
+                    $bulan = $tanggal->format('m');
+                    $hari = $tanggal->format('d');
                     $addBulan = $newData[1];
                     $newBulan = intval($bulan + $addBulan);
                     if ($newBulan > 12) {
@@ -120,7 +122,7 @@ class Admin extends BaseController
                     );
                     array_push($jadwal, $dataJ);
                 }
-                if($this->jadwalModel->insertBatch($jadwal)){
+                if ($this->jadwalModel->insertBatch($jadwal)) {
                     return redirect()->back()->with('success', 'Data Customer berhasil diinput');
                 }
             }
@@ -153,7 +155,7 @@ class Admin extends BaseController
         $delRiwayat = $this->riwayatServiceModel->where('customer_id', $data['id'])->delete();
         $delCust = $this->customerModel->delete($data['id']);
         $delAkun = $this->akunModel->delete($data['accountId']);
-        if ($delJadwal &&$delRiwayat && $delCust && $delAkun) {
+        if ($delJadwal && $delRiwayat && $delCust && $delAkun) {
             return redirect()->back()->with('success', 'Data Customer berhasil di Hapus');
         }
         return redirect()->back()->with('error', 'Data Customer gagal di Hapus');
@@ -268,6 +270,11 @@ class Admin extends BaseController
         // If you want to store it as a comma-separated string
         $tableServiceIds = implode(',', $selectedServices);
 
+        $ids = [];
+        foreach ($selectedServices as $ts) {
+            $idService = $this->itemServiceModel->getServiceId($ts);
+            array_push($ids, $idService);
+        }
         $insertBarang = array(
             'table_service_id' => $tableServiceIds,
             'customer_id' => $data['plat'],
@@ -276,6 +283,31 @@ class Admin extends BaseController
             'total_biaya' => $data['biaya'],
         );
         if ($this->riwayatServiceModel->insert($insertBarang)) {
+            $today = new DateTime();
+            foreach ($ids as $idss) {
+                $da = $this->jadwalModel->findId(intval($data['plat']), intval($idss['id']));
+                if ($da) {
+                    $tanggal = new DateTime($da['date']);
+                    $tahun = intval($tanggal->format('Y'));
+                    $bulan = intval($tanggal->format('m'));
+                    $hari = $today->format('d');
+                    $freq = intval($da['frekuensi']);
+                    $newBulan = $bulan + $freq;
+                    if ($newBulan > 12) {
+                        $newBulan -= 12;
+                        $tahun += 1;
+                    }
+                    $dataJ = null;
+                    $dataJ = array(
+                        'customer_id' => $da['customer_id'],
+                        'service_id' => $da['service_id'],
+                        'date'      => $tahun . "-" . $newBulan . "-" . $hari
+                    );
+                    $this->jadwalModel->update($da['id'], $dataJ);
+                    
+                }
+            }
+
             return redirect()->back()->with('success', 'Data Service berhasil diinput');
         }
         return redirect()->back()->with('error', 'Data Service gagal diinput');

@@ -21,4 +21,13 @@ class JadwalServiceModel extends Model
         ->where('j.customer_id',$id)
         ->get()->getResultArray();
     }
+
+    function findId($cusId,$serId){
+        return $this->db->table('jadwal_service as j')
+        ->join('table_service as t','t.id = j.service_id')
+        ->where('j.customer_id',$cusId)
+        ->where('j.service_id', $serId)
+        ->select('j.*, t.frekuensi')
+        ->get()->getRowArray();
+    }
 }

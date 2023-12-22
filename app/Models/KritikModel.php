@@ -24,4 +24,10 @@ class KritikModel extends Model
         ->orderBy('k.created_at', 'DESC')
         ->get()->getResultArray();
     }
+
+    function allKritik(){
+        return $this->db->table('kritik as k')
+        ->select('COUNT(k.id)')
+        ->get()->getRowArray();
+    }
 }

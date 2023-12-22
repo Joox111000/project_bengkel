@@ -36,4 +36,12 @@ class CustomerModel extends Model
         ->select('customer.id as id, customer.plat as plat')
         ->get()->getResultArray();
     }
+
+    function getTipeMotor(){
+        return $this->db->table('customer as c')
+        ->groupBy('c.plat')
+        ->select('COUNT(c.id) as total, c.jenis')
+        ->get()->getResultArray();
+    }
+
 }

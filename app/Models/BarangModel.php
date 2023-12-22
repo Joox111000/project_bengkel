@@ -12,4 +12,10 @@ class BarangModel extends Model
         'merk',
         'tipe',
     ];
+
+    function allBarang(){
+        return $this->db->table('barang as k')
+        ->select('COUNT(k.id)')
+        ->get()->getRowArray();
+    }
 }

@@ -26,4 +26,18 @@ class TableServiceModel extends Model
         ->select('t.*, b.nama as bNama')
         ->get()->getResultArray();
     }
+
+    function getServiceId($nama){
+        return $this->db->table('table_service as t')
+        ->where('t.nama',$nama)
+        ->select('t.id')
+        ->get()->getRowArray();
+    }
+
+    function jumlahService()
+    {
+        return $this->db->table('table_service as t')
+        ->select('COUNT(t.id)')
+        ->get()->getRowArray();
+    }
 }

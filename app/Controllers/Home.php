@@ -11,27 +11,46 @@ class Home extends BaseController
         return view('welcome_message');
     }
 
-    public function dashboard(){
+    public function dashboard()
+    {
         $jadwal = null;
         // if(session()->get('user')['namaRole'] == "user"){
         //     $jadwal = $this->jadwalModel->findJadwalById(session()->get('user')['cusId']);
         // }
-        $data = array(
-            'title'     => "Dashboard",
-            'folder'    => "Customer",
-            'jadwal'    => $jadwal
-        );
-        return view('Admin/dashboard',$data);
+        if (session()->get('user')['namaRole'] == "user") {
+            $data = array(
+                'title'     => "Dashboard",
+                'folder'    => "Customer",
+                'jadwal'    => $jadwal
+            );
+        } else {
+            $data = array(
+                'title'     => "Dashboard",
+                'folder'    => "Customer",
+                'jumlahCustomer'    => $this->customerModel->countAllResults(),
+                'jumlahServis'      => implode(" ",$this->itemServiceModel->jumlahService()),
+                'jumlahKritik'      => implode(' ', $this->kritikModel->allKritik()),
+                'jumlahBarang'      => implode(' ', $this->barangModel->allBarang())
+            );
+        }
+        return view('Admin/dashboard', $data);
     }
 
-//     public function findJadwal(){
-// return Json($this->jadwalModel->findJadwalById(session()->get('user')['cusId']));
-//     }
+    //     public function findJadwal(){
+    // return Json($this->jadwalModel->findJadwalById(session()->get('user')['cusId']));
+    //     }
 
-public function jadwalService(){
-    $id = session()->get('user')['cusId'];
-    $data = $this->jadwalModel->findJadwalById($id);
+    public function jadwalService()
+    {
+        $id = session()->get('user')['cusId'];
+        $data = $this->jadwalModel->findJadwalById($id);
 
-    return $this->response->setJSON($data);
-}
+        return $this->response->setJSON($data);
+    }
+    public function tipeMotor()
+    {
+        $data = $this->customerModel->getTipeMotor();
+
+        return $this->response->setJSON($data);
+    }
 }
