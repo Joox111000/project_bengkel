@@ -13,6 +13,7 @@ class RiwayatServiceModel extends Model
         'nama_mekanik',
         'nama_admin',
         'total_biaya',
+        'keluhan',
     ];
     // Dates
     protected $useTimestamps = true;

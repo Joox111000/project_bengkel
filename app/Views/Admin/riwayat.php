@@ -35,6 +35,7 @@ use CodeIgniter\I18n\Time;
                     <tr>
                         <th>No</th>
                         <th>Plat</th>
+                        <th>Keluhan</th>
                         <th>Service</th>
                         <th>Biaya</th>
                         <th>Tanggal Service</th>
@@ -50,6 +51,7 @@ use CodeIgniter\I18n\Time;
                         <tr>
                             <td><?= $no++ ?></td>
                             <td><?= $plat ?></td>
+                            <td><?= $data['keluhan']?></td>
                             <td><?= $data['table_service_id'] ?></td>
                             <td><?= $data['total_biaya'] ?></td>
                             <td><?= Time::parse(date('d F Y h:i:s', strtotime($data['created_at'])))->toLocalizedString('d MMMM yyyy') ?>
@@ -126,6 +128,14 @@ use CodeIgniter\I18n\Time;
                                     <label for="exampleInputEmail1">Biaya</label>
                                     <input type="number" class="form-control" name="biaya" placeholder="Enter Biaya" required>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                            <div class="form-group">
+                        <label>Keluhan</label>
+                        <textarea class="form-control" rows="3" name="keluhan" placeholder="Masukkan Keluhan"></textarea>
+                      </div>
                             </div>
                         </div>
                 </div>

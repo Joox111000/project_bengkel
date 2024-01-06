@@ -36,6 +36,9 @@ class RiwayatService extends Migration
                 'type' => 'INT',
                 'constraint' => 10,
             ],
+            'keluhan' => [
+                'type' => 'TEXT',
+            ],
             'created_at DATETIME DEFAULT CURRENT_TIMESTAMP'
         ]);
         $this->forge->addKey('id', true);

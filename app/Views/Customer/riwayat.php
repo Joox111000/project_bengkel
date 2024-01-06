@@ -80,6 +80,11 @@ use CodeIgniter\I18n\Time;
                                                                     </div>
                                                                 </div>
                                                                 <div class="timeline-footer">
+                                                                    <div class="callout " style="border-left: 5px solid red;">
+                                                                        <p>Keluhan: <?= $h['keluhan'] ?></p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="timeline-footer">
                                                                     <div class="callout">
                                                                         <p>Total Biaya: <?= $h['total_biaya'] ?></p>
                                                                     </div>

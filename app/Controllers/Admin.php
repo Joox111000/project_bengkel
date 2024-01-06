@@ -13,6 +13,7 @@ class Admin extends BaseController
         //
     }
 
+    // READ Data
     public function barang()
     {
         $data = array(
@@ -23,6 +24,8 @@ class Admin extends BaseController
 
         return view('Admin/inventori', $data);
     }
+
+    // CREATE Data
     public function addBarang()
     {
         $data = $this->request->getPost();
@@ -36,12 +39,14 @@ class Admin extends BaseController
         }
         return redirect()->back()->with('error', 'Data Barang gagal diinput');
     }
+
+    //UPDATE Data
     public function editBarang()
     {
         $data = $this->request->getPost();
 
         $updateBarang = array(
-            'nama'      => $data['nama'],
+            'nama'      => $data['tes'],
             'merk'      => $data['merk'],
             'tipe'     => $data['tipe'],
         );
@@ -50,6 +55,8 @@ class Admin extends BaseController
         }
         return redirect()->back()->with('error', 'Data Barang gagal di Edit');
     }
+
+
     public function deleteBarang()
     {
         $data = $this->request->getPost();
@@ -258,7 +265,6 @@ class Admin extends BaseController
             'cust'          => $this->customerModel->getCust(),
             'serv'          => $this->itemServiceModel->allService()
         );
-
         return view('Admin/riwayat', $data);
     }
 
@@ -281,6 +287,7 @@ class Admin extends BaseController
             'nama_mekanik' => $data['mekanik'],
             'nama_admin' => $data['admin'],
             'total_biaya' => $data['biaya'],
+            'keluhan' => $data['keluhan'],
         );
         if ($this->riwayatServiceModel->insert($insertBarang)) {
             $today = new DateTime();

@@ -125,7 +125,7 @@
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Nama</label>
-                                        <input type="text" class="form-control" name="nama" placeholder="Enter Nama" required value="<?= $data['nama'] ?>">
+                                        <input type="text" class="form-control" name="tes" placeholder="Enter Nama" required value="<?= $data['nama'] ?>">
                                     </div>
                                 </div>
                                 <div class="col-4">
