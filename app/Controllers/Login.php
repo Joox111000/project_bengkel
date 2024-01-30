@@ -11,22 +11,27 @@ class Login extends BaseController
         return view("Login/index");
     }
 
-    public function auth(){
+    public function auth()
+    {
         $data = $this->request->getPost();
 
         $dataLogin = $this->akunModel->dataLogin($data['username']);
-    
-        if($dataLogin && sha1( $data['password']) == $dataLogin['password']){
-            if($dataLogin['namaRole'] != "admin"){
+
+        if ($dataLogin && sha1($data['password']) == $dataLogin['password']) {
+            if ($dataLogin['namaRole'] == "user") {
                 $dataLogin = $this->akunModel->dataLoginCustomer($data['username']);
             }
-session()->set('user',$dataLogin);
+            session()->set('user', $dataLogin);
+            if ($dataLogin['namaRole'] == "mekanik") {
+                return redirect()->to(base_url("Admin/pencarian"));
+            }
             return redirect()->to(base_url("Home/dashboard"));
         }
-        return redirect()->back()->with('error','email atau password salah');
+        return redirect()->back()->with('error', 'email atau password salah');
     }
 
-    public function logout(){
+    public function logout()
+    {
         session()->destroy();
         return redirect()->to(base_url('/Login/index'));
     }

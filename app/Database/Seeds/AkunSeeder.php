@@ -10,14 +10,9 @@ class AkunSeeder extends Seeder
     {
         $data = [
             [
-                'email'    => 'Superadmin@gmail.com',
+                'email'    => 'mekanik@gmail.com',
                 'password' => sha1("123456"),
-                'role_id'  => 1,
-            ],
-            [
-                'email'    => 'user1@gmail.com',
-                'password' => sha1("password123"),
-                'role_id'  => 2,
+                'role_id'  => 3,
             ],
         ];
     

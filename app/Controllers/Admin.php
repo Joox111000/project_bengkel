@@ -130,6 +130,10 @@ class Admin extends BaseController
                     array_push($jadwal, $dataJ);
                 }
                 if ($this->jadwalModel->insertBatch($jadwal)) {
+                    $pointToInsert = array(
+                        'customer_id'       => $cusId
+                    );
+                    $this->rewardModel->insert($pointToInsert);
                     return redirect()->back()->with('success', 'Data Customer berhasil diinput');
                 }
             }
@@ -289,6 +293,9 @@ class Admin extends BaseController
             'total_biaya' => $data['biaya'],
             'keluhan' => $data['keluhan'],
         );
+        $pointReward = intval(intval($insertBarang['total_biaya']) / 5000);
+        $dataReward = $this->rewardModel->where('customer_id',$insertBarang['customer_id'])->get()->getRowArray();
+        $updatedPoint = intval(intval($dataReward['poin']) + $pointReward);
         if ($this->riwayatServiceModel->insert($insertBarang)) {
             $today = new DateTime();
             foreach ($ids as $idss) {
@@ -315,6 +322,10 @@ class Admin extends BaseController
                 }
             }
 
+            $pointToAdd = array(
+                'poin'     => $updatedPoint
+            );
+            $this->rewardModel->update($dataReward['id'], $pointToAdd);
             return redirect()->back()->with('success', 'Data Service berhasil diinput');
         }
         return redirect()->back()->with('error', 'Data Service gagal diinput');
@@ -328,5 +339,51 @@ class Admin extends BaseController
             'data'          => $this->kritikModel->getKritik(),
         );
         return view('Admin/aduan', $data);
+    }
+
+    public function reward()
+    {
+        $data = array(
+            'title'     => "Tukar Kupon",
+            'folder'    => "Admin",
+            'data'      => $this->redeemModel->getDataRedeem()
+        );
+        return view('Admin/reward', $data);
+    }
+
+    public function redeem()
+    {
+        $data = $this->request->getPost();
+
+        $dataRedeem = $this->redeemModel->getDataByToken($data['token']);
+
+        if(!$dataRedeem){
+            return redirect()->back()->with('error', 'Token Salah!');
+        }
+        $idRedeem = intval($dataRedeem['id']);
+        $idPoint = intval($dataRedeem['point_reward_id']);
+        $usedPoint = intval($dataRedeem['point_digunakan']);
+
+        $dataPoint = $this->rewardModel->find($idPoint);
+        if(!$dataPoint){
+            return redirect()->back()->with('error', 'Token Salah!');
+        }
+        $existingPoint = intval($dataPoint['poin']);
+        $remainPoint = $existingPoint - $usedPoint;
+        if($remainPoint < 0){
+            return redirect()->back()->with('error', 'Point Tidak Mencukupi!');
+        }
+
+        $dataToUpdate = array(
+            'poin'     => $remainPoint
+        );
+
+        $redeemSucced = array(
+            'status'    => 1
+        );
+        if ($this->redeemModel->update($idRedeem, $redeemSucced) && $this->rewardModel->update($idPoint, $dataToUpdate)) {
+            return redirect()->back()->with('success', 'Reward Berhasil di Redeem');
+        }
+        return redirect()->back()->with('error', 'Reward Gagal di Redeem');
     }
 }
